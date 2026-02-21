@@ -1,6 +1,19 @@
+// Note: Mongo DB connection / configuration...!
+
 import mongoose from "mongoose";
 
-export const conectMongoDB = () =>  mongoose
-.connect(process.env.MONGODB_URL)
-.then(()=> console.log("MongoDB Connected"))
-.catch((e)=> console.log("Err while mongodb connection: ",e))
+const conectMongoDB = async () => {
+  try {
+    const isConnect = await mongoose.connect(
+        process.env.MONGO_DB_URL,
+        { dbName: "testing" }
+    );
+    isConnect && console.log('Mongo DB connected successfully');
+  }
+  
+  catch (error) {
+    console.log("Something went wrong while connecting to DB: ", error);
+  }
+};
+
+export default conectMongoDB;

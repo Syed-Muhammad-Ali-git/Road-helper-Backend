@@ -5,13 +5,14 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import { config } from "dotenv";
-import { conectMongoDB } from "./src/utils/db.js";
+import conectMongoDB from "./src/utils/db.js";
 
 import userRoutes from "./src/routes/user-routes.js";
 
 // Environment variables config...!
 config({
   path: "./.env",
+  debug: true
 });
 
 // Note: Database connection here...!

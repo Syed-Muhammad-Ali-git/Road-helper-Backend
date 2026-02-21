@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
 
 }, {
     timestamps: true,
-    collation: "users"
+    collation: "user-collection"
 })
 
 const UserModel = mongoose.model("User", userSchema);

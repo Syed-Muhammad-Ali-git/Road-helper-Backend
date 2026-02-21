@@ -5,22 +5,25 @@ const welcomeApiScreen = (req, res) => {
 }
 
 const saveUser = async (req,res) => {
-    try {
-        const { userName, email, password, role , address} = req.body;
-
-        if (!userName || !email || !password || !role || !address) {   
+    try {        
+        const isFieldsEmpty = Object.values(req.body).some(value => !value);
+        
+        if (isFieldsEmpty) {   
             return res.status(400).send({
                 status: false,
                 message: "All fields are required!!!"
             })
         }
-        const newUser = new UserModel({
-            userName,
-            email,
-            password,
-            role,
-            address
-        })
+
+        const existingUser = await UserModel.findOne({ email: req.body.email });
+        if (existingUser) {
+            return res.status(400).send({
+                status: false,
+                message: "User already exists!!!"
+            })
+        }
+
+        const newUser = new UserModel(req.body);
         await newUser.save();
         return res.status(200).send({
             status: true,
@@ -30,7 +33,7 @@ const saveUser = async (req,res) => {
     catch (err){
         return res.status(500).send({
             status: false,
-            message: "Internal Server error!!!"
+            message: "Internal Server error!!!" + err
         })
     }
 }
