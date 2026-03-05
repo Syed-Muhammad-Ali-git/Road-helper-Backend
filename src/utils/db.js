@@ -3,17 +3,20 @@
 import mongoose from "mongoose";
 
 const conectMongoDB = async () => {
+  const mongoUrl = process.env.MONGO_DB_URL || "mongodb+srv://muhammadsadoon:muhammadsadoon@sadooncluster.xqqayik.mongodb.net/?appName=SadoonCluster";
+  const dbName = process.env.DB_NAME || "testing";
+
   try {
-    const isConnect = await mongoose.connect(
-        process.env.MONGO_DB_URL,
-        { dbName: "testing" }
-    );
-    isConnect && console.log('Mongo DB connected successfully');
+    const res = await mongoose.connect(mongoUrl, {
+      dbName: dbName,
+    });
+    res && console.log("Connected to MongoDB successfully!");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1); // Exit the process with an error code
   }
   
-  catch (error) {
-    console.log("Something went wrong while connecting to DB: ", error);
-  }
 };
+
 
 export default conectMongoDB;
