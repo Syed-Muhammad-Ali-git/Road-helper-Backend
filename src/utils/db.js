@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 
 const conectMongoDB = async () => {
-  const mongoUrl = process.env.MONGO_DB_URL || "mongodb+srv://muhammadsadoon:muhammadsadoon@sadooncluster.xqqayik.mongodb.net/?appName=SadoonCluster";
+  const mongoUrl = process.env.MONGO_DB_URL;
   const dbName = process.env.DB_NAME || "testing";
 
   try {
